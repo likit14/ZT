@@ -1,0 +1,76 @@
+version: "3.8"
+
+services:
+  react-app:
+    build:
+      context: .
+    ports:
+      - "3000:80"
+    depends_on:
+      - node-backend
+      - flask-backend
+      - mysql-db
+    networks:
+      - pinakastra-cloud_my-network
+    volumes:
+      - /home/data/hardware_summary.json:/usr/share/nginx/html/hardware_summary.json
+
+  node-backend:
+    build:
+      context: ./backend
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mysql-db
+    environment:
+      - DB_HOST=mysql-db
+      - DB_USER=root
+      - DB_PASSWORD=Likith@172323
+      - DB_NAME=standalone
+      - EMAIL_USER=pinakastra.join@gmail.com
+      - EMAIL_PASS=sqei dbiv vxou ddsy
+      - SESSION_SECRET=your-secret-key
+    entrypoint: ["/bin/sh", "-c", "./wait-for-it-script.sh mysql-db node server.js"]
+    networks:
+      - pinakastra-cloud_my-network
+
+  flask-backend:
+    build:
+      context: ./backend/python
+    depends_on:
+      - mysql-db
+    network_mode: host
+      
+  script-service:
+    build:
+      context: ./backend/python/script
+    depends_on:
+      - mysql-db
+    volumes:
+      - /home/data:/home/data 
+    network_mode: host
+
+  mysql-db:
+    image: mysql:8.0
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: Likith@172323
+      MYSQL_DATABASE: standalone
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - pinakastra-cloud_my-network
+
+volumes:
+  mysql-data:
+
+networks:
+  pinakastra-cloud_my-network:
+    external: true
+

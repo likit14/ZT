@@ -1,0 +1,7 @@
+flask
+flask-cors
+scapy
+netifaces
+requests
+pyghmi
+aiohttp

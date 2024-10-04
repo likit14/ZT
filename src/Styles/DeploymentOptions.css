@@ -1,0 +1,139 @@
+.container {
+  display: flex;
+  justify-content: center; /* Center contents horizontally */
+  align-items: center; /* Center contents vertically */
+  min-height: 100vh; /* Adjust height as needed */
+  background-color: #f0f2f5; /* Light background color */
+}
+
+.main-content {
+  text-align: center; /* Center text */
+}
+
+h1 {
+  color: #333333; /* Dark text color */
+  font-size: 2rem; /* Larger font size for heading */
+  margin-bottom: 75px; /* Space below heading */
+  user-select: none; /* Standard syntax */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
+.options-container {
+  display: flex;
+  justify-content: center; /* Center options horizontally */
+  margin-bottom: 20px; /* Space below options */
+}
+
+.option-box {
+  width: 200px; /* Reduced width of each option box */
+  height: 300px; /* Increased height to fit back content */
+  perspective: 1000px; /* Perspective for 3D effect */
+  margin-bottom: 50px; 
+  margin-right: 40px; /* Margin between option boxes */
+  margin-left: 40px; /* Margin between option boxes */
+  cursor: pointer; /* Change cursor on hover */
+}
+
+.option {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  position: relative;
+  user-select: none; /* Standard syntax */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
+.option-box:hover .option {
+  transform: rotateY(180deg);
+}
+
+.option-content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border: 1px solid #ccc; /* Gray border */
+  border-radius: 4px; /* Rounded corners */
+  padding: 10px; /* Reduced padding inside the box */
+  background-color: #ffffff; /* White background */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  display: flex; /* Use flexbox for centering */
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+}
+
+.option-content.front {
+  z-index: 2; /* Ensure front is above back */
+}
+
+.option-content.back {
+  transform: rotateY(180deg);
+  z-index: 1;
+}
+
+.option-box.selected {
+  background-color: transparent; /* Transparent background */
+}
+
+.option-box:hover .option-content.front {
+  transform: scale(1.05); /* Scale up slightly on hover */
+}
+
+.option-text {
+  font-size: 1rem; /* Reduced font size for option text */
+  color: #333333; /* Dark text color */
+}
+
+.nextButton {
+  margin-top: 0px; /* Space above next button */
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #2596be;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.nextButton:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.nextButton:not(:disabled):hover {
+  background-color: #0056b3;
+}
+
+/* Optional: Adjust selected option background */
+.option-box.selected .option-content {
+  background-color: #90EE90; /* background for selected option */
+}
+/* Scroll Bar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px #22262b; 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #22262b; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #22262b;
+}
+
+
