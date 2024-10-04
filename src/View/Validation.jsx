@@ -89,7 +89,7 @@ const handleBmcFormSubmit = async (event) => {
 
     try {
         // Submit BMC details to the server
-        const response = await axios.post('http://127.0.0.1:8000/set_pxe_boot', bmcDetails);
+        const response = await axios.post('http://192.168.249.101:8000/set_pxe_boot', bmcDetails);
         console.log('BMC Details submitted:', bmcDetails);
         console.log('Server response:', response.data); // Log the server response for debugging
 
