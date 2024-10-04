@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios'; // Import axios for API calls
+import axios from 'axios'; // Import axios for
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowsRotate } from "@fortawesome/free-solid-svg-icons";
 import Sidebar from "../Components/sidebar";
