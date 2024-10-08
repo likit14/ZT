@@ -270,7 +270,190 @@ const handleBmcFormSubmit = async (event) => {
             nicPassed: validationNic1GCount >= minNic1GCount,
         };
     };
+    const handleDeployClick = (ip) => {
+        Swal.fire({
+            title: "Management Network",
+            width: "60%",
+            html: `
+                <div style="display: flex; justify-content: space-between; font-size: 1.2rem; padding: 10px; margin-top: 20px;">
+             <div style="display: flex; flex-direction: column; align-items: center;">
+        <div style="display: flex; align-items: center;">
+            <span style="margin-left: 50px; font-weight: bold;">IP/CIDR</span>
+        </div>
+        <div style="display: flex; align-items: center; margin-top: 10px;">
+            <span style="margin-right: 5px; color: red;">*</span>           
+            <span style="margin-right: 10px; font-weight: bold;">OOB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <input type="text" placeholder="Enter IP/CIDR" 
+                style="padding: 8px; border-radius: 5px; 
+                       border: 1px solid #ccc; width: 120px;">
+        </div>
+        <div style="display: flex; align-items: center; margin-top: 10px;">
+            <span style="margin-right: 5px; color: red;">*</span>           
+            <span style="margin-right: 5px; font-weight: bold; margin-left: 0;">Mgmt IP</span>
+            <input type="text" placeholder="Enter Mgmt IP" 
+                style="padding: 8px; border-radius: 5px; 
+                       border: 1px solid #ccc; width: 120px;">
+        </div>
+                <div style="display: flex; align-items: center; margin-top: 10px; margin-left: -150px;">
+                    <span style="margin-right: 5px; color: red;">*</span>           
+                    <span style="margin-right: 5px; font-weight: bold;">VLAN&nbsp;&nbsp;</span>
+                </div>
+                        <div style="display: flex; align-items: center; margin-top: 10px; margin-left: 40px;">
+    <span style="margin-right: 5px; color: red;">*</span>           
+    <span style="margin-right: 5px; font-weight: bold; margin-left: 0;">Provider NGW</span>
+    <input type="text" placeholder="Enter Gateway" 
+           style="padding: 8px; border-radius: 5px; 
+                  border: 1px solid #ccc; width: 120px;">
+</div>
 
+        <div style="margin-top: 10px;"></div>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center;">
+        <span style="font-weight: bold;">VLAN ID</span>
+        <input type="text" placeholder="Enter VLAN ID" 
+            style="margin-top: 10px; padding: 8px; border-radius: 5px; 
+                   border: 1px solid #ccc; width: 120px;">
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center;">
+        <span style="font-weight: bold;">BOND</span>
+        <input type="checkbox" style="margin-top: 19px; width: 16px; height: 16px;">
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center;">
+        <span style="font-weight: bold;">INTERFACE</span>
+        <div style="margin-top: 10px; ">
+            <select style="padding: 8px; border-radius: 5px; 
+                           border: 1px solid #ccc; width: 120px; font-size: 0.8rem; height: 32px">
+                <option value="" disabled selected>Select</option>
+                <option value="eth0">eth0</option>
+                <option value="eth1">eth1</option>
+                <option value="wlan0">wlan0</option>
+                <option value="lo">(lo)</option>
+                <option value="docker0">docker0</option>
+            </select>
+        </div>
+        <div style="margin-top: 10px;">
+            <select style="padding: 8px; border-radius: 5px; 
+                           border: 1px solid #ccc; width: 120px; font-size: 0.8rem; height: 31.5px">
+                <option value="" disabled selected>Select</option>
+                <option value="eth0">eth0</option>
+                <option value="eth1">eth1</option>
+                <option value="wlan0">wlan0</option>
+                <option value="lo">(lo)</option>
+                <option value="docker0">docker0</option>
+            </select>
+        </div>
+        <div style="margin-top: 10px;">
+            <select style="padding: 8px; border-radius: 5px; 
+                           border: 1px solid #ccc; width: 120px; font-size: 0.8rem; height: 32px">
+                <option value="" disabled selected>Select</option>
+                <option value="eth0">eth0</option>
+                <option value="eth1">eth1</option>
+                <option value="wlan0">wlan0</option>
+                <option value="lo">(lo)</option>
+                <option value="docker0">docker0</option>
+            </select>
+        </div>
+             </div>
+                </div>
+            `,
+            confirmButtonText: "BOOT",
+            confirmButtonColor: "#28a745",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Trigger the next popup after clicking "BOOT"
+                Swal.fire({
+                    title: "Deployment",
+                    width: "60%",
+                    html: `
+                        <div style="display: flex; justify-content: space-between; font-size: 1.2rem; padding: 10px; margin-top: 20px;">
+             <div style="display: flex; flex-direction: column; align-items: center;">
+        <div style="display: flex; align-items: center;">
+            <span style="margin-left: 50px; font-weight: bold;">IP/CIDR</span>
+        </div>
+        <div style="display: flex; align-items: center; margin-top: 10px;">
+            <span style="margin-right: 5px; color: red;">*</span>           
+            <span style="margin-right: 10px; font-weight: bold;">IBN &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <input type="text" placeholder="Enter IP/CIDR" 
+                style="padding: 8px; border-radius: 5px; 
+                       border: 1px solid #ccc; width: 120px;">
+        </div>
+        <div style="display: flex; align-items: center; margin-top: 10px;">
+            <span style="margin-right: 5px; color: red;">*</span>           
+            <span style="margin-right: 5px; font-weight: bold; margin-left: 0;">Storage</span>
+            <input type="text" placeholder="Enter IP" 
+                style="padding: 8px; border-radius: 5px; 
+                       border: 1px solid #ccc; width: 120px;">
+        </div>
+                <div style="display: flex; align-items: center; margin-top: 10px; margin-left: 0px;">
+                    <span style="margin-right: 5px; color: red;">*</span>           
+                    <span style="margin-right: 5px; font-weight: bold;">VIP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <input type="text" placeholder="Enter" 
+           style="padding: 8px; border-radius: 5px; 
+                  border: 1px solid #ccc; width: 120px;">
+                </div>
+                        <div style="display: flex; align-items: center; margin-top: 10px; margin-left: -12px;">
+    <span style="margin-right: 5px; color: red;">*</span>           
+    <span style="margin-right: 5px; font-weight: bold; margin-left: 0;">Services</span>
+<select style="padding: 8px; border-radius: 5px; 
+                           border: 1px solid #ccc; width: 120px; font-size: 0.8rem; height: 31.5px">
+                <option value="" disabled selected>Select</option>
+                <option value="eth0">docker</option>
+                <option value="eth1">kubernetes</option>
+                <option value="wlan0">..</option>
+                <option value="lo">..</option>
+                <option value="docker0">..</option>
+            </select>
+</div>
+
+        <div style="margin-top: 10px;"></div>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center;">
+        <span style="font-weight: bold;">VLAN ID</span>
+        <input type="text" placeholder="Enter VLAN ID" 
+            style="margin-top: 10px; padding: 8px; border-radius: 5px; 
+                   border: 1px solid #ccc; width: 120px;">
+    <input type="text" placeholder="Enter VLAN ID" 
+        style="margin-top: 10px; padding: 8px; border-radius: 5px; 
+               border: 1px solid #ccc; width: 120px;">
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center;">
+        <span style="font-weight: bold;">BOND</span>
+        <input type="checkbox" style="margin-top: 19px; width: 16px; height: 16px;">
+        <input type="checkbox" style="margin-top: 19px; width: 16px; height: 16px;">
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center;">
+        <span style="font-weight: bold;">INTERFACE</span>
+        <div style="margin-top: 10px; ">
+            <select style="padding: 8px; border-radius: 5px; 
+                           border: 1px solid #ccc; width: 120px; font-size: 0.8rem; height: 32px">
+                <option value="" disabled selected>Select</option>
+                <option value="eth0">eth0</option>
+                <option value="eth1">eth1</option>
+                <option value="wlan0">wlan0</option>
+                <option value="lo">(lo)</option>
+                <option value="docker0">docker0</option>
+            </select>
+        </div>
+        <div style="margin-top: 10px;">
+            <select style="padding: 8px; border-radius: 5px; 
+                           border: 1px solid #ccc; width: 120px; font-size: 0.8rem; height: 31.5px">
+                <option value="" disabled selected>Select</option>
+                <option value="eth0">eth0</option>
+                <option value="eth1">eth1</option>
+                <option value="wlan0">wlan0</option>
+                <option value="lo">(lo)</option>
+                <option value="docker0">docker0</option>
+            </select>
+        </div>
+             </div>
+                </div>
+                    `,
+                    confirmButtonText: "DEPLOY",
+                    confirmButtonColor: "#28a745",
+                });
+            }
+        });
+    };
 
     const paginatedNodes = selectedNodes.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
@@ -341,13 +524,26 @@ const handleBmcFormSubmit = async (event) => {
                                                     {validationResults[node.ip] && (
                                                         <button
                                                             className={styles["deploy-button"]}
-                                                            disabled={validationResults[node.ip].status !== 'Passed'} // Disable if not 'Passed'
-                                                            title={validationResults[node.ip].status !== 'Passed' ? "Sorry, you can't deploy!" : undefined} // Tooltip message when hovered
+                                                            disabled={
+                                                                validationResults[node.ip].status !== "Passed"
+                                                            } // Disable if not 'Passed'
+                                                            title={
+                                                                validationResults[node.ip].status !== "Passed"
+                                                                    ? "Sorry, you can't deploy!"
+                                                                    : undefined
+                                                            } // Tooltip message when hovered
                                                             style={{
-                                                                backgroundColor: validationResults[node.ip].status === 'Passed' ? '#28a745' : '#dc3545', // Green for Passed, red for Failed
-                                                                color: 'white',
-                                                                cursor: validationResults[node.ip].status === 'Passed' ? 'pointer' : 'not-allowed'
+                                                                backgroundColor:
+                                                                    validationResults[node.ip].status === "Passed"
+                                                                        ? "#28a745"
+                                                                        : "#dc3545", // Green for Passed, red for Failed
+                                                                color: "white",
+                                                                cursor:
+                                                                    validationResults[node.ip].status === "Passed"
+                                                                        ? "pointer"
+                                                                        : "not-allowed",
                                                             }}
+                                                            onClick={() => handleDeployClick(node.ip)} // Call handleDeployClick on button click
                                                         >
                                                             Deploy
                                                         </button>
@@ -433,4 +629,5 @@ const handleBmcFormSubmit = async (event) => {
 };
 
 export default Validation;
+
 
