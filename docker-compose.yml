@@ -13,7 +13,7 @@ services:
     networks:
       - pinakastra-cloud_my-network
     volumes:
-      - /home/data/hardware_summary.json:/usr/share/nginx/html/hardware_summary.json
+      - shared-data:/usr/share/nginx/html
 
   node-backend:
     build:
@@ -47,7 +47,7 @@ services:
     depends_on:
       - mysql-db
     volumes:
-      - /home/data:/home/data 
+      - shared-data:/home/d
     network_mode: host
 
   mysql-db:
@@ -69,8 +69,8 @@ services:
 
 volumes:
   mysql-data:
+  shared-data:
 
 networks:
   pinakastra-cloud_my-network:
     external: true
-
