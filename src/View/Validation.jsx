@@ -498,7 +498,7 @@ const Validation = () => {
                                                         disabled={validatingNode !== null && validatingNode.ip === node.ip}
                                                         onClick={() => validateNode(node)}
                                                     >
-                                                        {validatingNode !== null && validatingNode.ip === node.ip ? 'Validated' : 'Validate'}
+                                                        {validatingNode !== null && validatingNode.ip === node.ip ? 'ReValidate' : 'Start'}
                                                     </button>
                                                 </td>
                                                 <td style={{ color: 'red', fontFamily: 'Arial, sans-serif' }}>
