@@ -28,7 +28,7 @@ const Validation = () => {
 
     useEffect(() => {
         fetchScanResults();
-        fetchValidationData(); // Fetch validation data when component mounts
+        // fetchValidationData(); // Fetch validation data when component mounts
     }, []);
 
     const fetchScanResults = async () => {
@@ -37,16 +37,6 @@ const Validation = () => {
             setScanResults(response.data);
         } catch (error) {
             console.error('Error fetching scan results:', error);
-        }
-    };
-
-    const fetchValidationData = async () => {
-        try {
-            const response = await fetch('/hardware_summary.json'); // Fetching the file from the public directory
-            const data = await response.json();
-            setValidationData(data); // Set the fetched data to state
-        } catch (error) {
-            console.error('Error fetching hardware summary:', error);
         }
     };
 
@@ -84,30 +74,41 @@ const Validation = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-const handleBmcFormSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-        // Submit BMC details to the server
-        const response = await axios.post('http://192.168.249.101:8000/set_pxe_boot', bmcDetails);
-        console.log('BMC Details submitted:', bmcDetails);
-        console.log('Server response:', response.data); // Log the server response for debugging
-
-        // Introduce a delay after sending the PXE boot request
-        await new Promise((resolve) => setTimeout(resolve, 120000)); // 1-minute delay (60,000 milliseconds)
-
-        // Fetch validation data after the delay
-        const validationDataResponse = await fetch('/hardware_summary.json'); // Fetching the file from the public directory
-        if (!validationDataResponse.ok) {
-            throw new Error('Failed to fetch validation data');
+    const handleBmcFormSubmit = async (event) => {
+        event.preventDefault();
+    
+        try {
+            // Submit BMC details to the server
+            const response = await axios.post('http://192.168.249.101:8000/set_pxe_boot', bmcDetails);
+            console.log('BMC Details submitted:', bmcDetails);
+            console.log('Server response:', response.data); // Log the server response for debugging
+    
+            // Introduce a delay after sending the PXE boot request
+            await new Promise((resolve) => setTimeout(resolve, 120000)); // 2-minute delay (120,000 milliseconds)
+    
+            // Fetch validation data after the delay
+            await fetchValidationData();
+    
+        } catch (error) {
+            console.error('Error in form submission:', error);
         }
-        
-        const fetchedValidationData = await validationDataResponse.json();
-        console.log('Fetched validation data:', fetchedValidationData); // Log fetched data for debugging
-
-        // Comparison logic using the fetched data
-        const comparisonResults = compareSpecs(fetchedValidationData, requirementData);
-
+    };
+    
+    const fetchValidationData = async () => {
+        try {
+            const response = await fetch('/hardware_summary.json'); // Fetching the file from the public directory
+            if (!response.ok) {
+                throw new Error('Failed to fetch validation data');
+            }
+            const data = await response.json();
+            console.log('Fetched validation data:', data); // Log fetched data for debugging
+    
+            // Set the fetched data to state
+            setValidationData(data);
+    
+            // Comparison logic using the fetched data
+            const comparisonResults = compareSpecs(data, requirementData);
+    
         // Determine overall status
         const overallStatus =
             comparisonResults.cpuCoresPassed &&
@@ -629,5 +630,3 @@ const handleBmcFormSubmit = async (event) => {
 };
 
 export default Validation;
-
-
